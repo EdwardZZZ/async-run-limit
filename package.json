@@ -17,8 +17,8 @@
     "access": "public"
   },
   "scripts": {
-    "lint": "esw src --ext .ts",
-    "lint-w": "esw src --clear -w --ext .ts",
+    "lint": "eslint src --ext .ts",
+    "lint-w": "esw src --clear --color -w --ext .ts",
     "build-w": "tsc -w --inlineSourceMap",
     "start": "run-p lint-w build-w",
     "prebuild": "esw src --ext .ts",
