@@ -8,7 +8,7 @@ const fn = (str) => new Promise((resolve, reject) => {
     }, time);
 });
 
-const r = limit(fn, 3)
+const r = limit(3, fn)
 
 r('a').then(str => console.log(str)).catch(err => console.log(err.message));
 r('b').then(str => console.log(str)).catch(err => console.log(err.message));
@@ -19,3 +19,18 @@ r('f').then(str => console.log(str)).catch(err => console.log(err.message));
 r('g').then(str => console.log(str)).catch(err => console.log(err.message));
 r('h').then(str => console.log(str)).catch(err => console.log(err.message));
 r('i').then(str => console.log(str)).catch(err => console.log(err.message));
+
+const r2 = limit(3);
+
+setTimeout(() => {
+    r2(fn, '>>a').then(data => console.log(data)).catch(err => console.log(err.message));
+    r2(fn, '>>b').then(data => console.log(data)).catch(err => console.log(err.message));
+    r2(fn, '>>c').then(data => console.log(data)).catch(err => console.log(err.message));
+    r2(fn, '>>d').then(data => console.log(data)).catch(err => console.log(err.message));
+    r2(fn, '>>e').then(data => console.log(data)).catch(err => console.log(err.message));
+    r2(fn, '>>f').then(data => console.log(data)).catch(err => console.log(err.message));
+    r2(fn, '>>g').then(data => console.log(data)).catch(err => console.log(err.message));
+    r2(fn, '>>h').then(data => console.log(data)).catch(err => console.log(err.message));
+    r2(fn, '>>i').then(data => console.log(data)).catch(err => console.log(err.message));
+    r2(fn, '>>j').then(data => console.log(data)).catch(err => console.log(err.message));
+}, 5e3);

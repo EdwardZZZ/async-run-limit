@@ -1,7 +1,8 @@
 {
   "name": "async-run-limit",
-  "version": "0.1.0",
-  "description": "> TODO: description",
+  "version": "1.0.0",
+  "description": "async limit, promise limit",
+  "keywords": ["async", "promise", "limit"],
   "author": "zhangzhihua <edwardzzz@foxmail.com>",
   "license": "ISC",
   "main": "lib/index.js",
