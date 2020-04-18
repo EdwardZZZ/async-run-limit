@@ -1,19 +1,25 @@
 # async-run-limit
 
 make async function run only limit size, the rest run by queue.
+
 让异步代码同时只运行指定的数量，其余的按队列执行。
 
-### install
+### Install
 ```bash
 $ npm i -S async-run-limit
 ```
 
-### usage
+### Types
 ```js
 const limit: (size: Number, func?: Function) => (...props: any[]) => Promise<unknown>;
 ```
 
+### Usage
+
 ```js
+const limit = require('async-run-limit');
+
+// async function demo
 const fn = (str) => new Promise((resolve, reject) => {
     const time = Math.random() * 3e3;
     setTimeout(() => {
@@ -23,7 +29,7 @@ const fn = (str) => new Promise((resolve, reject) => {
 });
 ```
 
-#### usage1
+#### eg1
 ```js
 const r = limit(3, fn)
 
@@ -38,7 +44,7 @@ r('h').then(str => console.log(str)).catch(err => console.log(err.message));
 r('i').then(str => console.log(str)).catch(err => console.log(err.message));
 ```
 
-#### usage2
+#### eg2
 ```js
 const r2 = limit(3);
 
