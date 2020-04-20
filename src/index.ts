@@ -3,9 +3,8 @@ export = function limit(size: Number, func?: Function) {
     const waitPool = [];
     const callMethod = async (that1: any, fn1: Function, props1: any[], resolve1: Function, reject1: Function) => {
         try {
-            const data = await fn1.call(that1, ...props1);
-
-            resolve1(data);
+            n++;
+            resolve1(await fn1.call(that1, ...props1));
         } catch (err) {
             reject1(err);
         } finally {
@@ -13,7 +12,6 @@ export = function limit(size: Number, func?: Function) {
             if (waitPool.length > 0) {
                 const { that, fn, props, resolve, reject } = waitPool.shift();
 
-                n++;
                 callMethod(that, fn, props, resolve, reject);
             }
         }
@@ -29,8 +27,6 @@ export = function limit(size: Number, func?: Function) {
 
         return new Promise((resolve, reject) => {
             if (n < size) {
-                n++;
-
                 callMethod(this, fn, props, resolve, reject);
             } else {
                 waitPool.push({ that: this, fn, props, resolve, reject });
