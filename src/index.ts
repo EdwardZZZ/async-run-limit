@@ -1,18 +1,18 @@
+type TCallMethod = (that1: any, fn1: Function, props1: any[], resolve1: Function, reject1: Function) => Promise<any>;
+
 export = function limit(size: Number, func?: Function) {
     let n = 0;
-    const waitPool = [];
-    const callMethod = async (that1: any, fn1: Function, props1: any[], resolve1: Function, reject1: Function) => {
+    const waitPool: Parameters<TCallMethod>[] = [];
+    const callMethod: TCallMethod = async (that, fn, props, resolve, reject) => {
         try {
             n++;
-            resolve1(await fn1.call(that1, ...props1));
+            resolve(await fn.call(that, ...props));
         } catch (err) {
-            reject1(err);
+            reject(err);
         } finally {
             n--;
             if (waitPool.length > 0) {
-                const { that, fn, props, resolve, reject } = waitPool.shift();
-
-                callMethod(that, fn, props, resolve, reject);
+                callMethod(...waitPool.shift());
             }
         }
     };
@@ -29,7 +29,7 @@ export = function limit(size: Number, func?: Function) {
             if (n < size) {
                 callMethod(this, fn, props, resolve, reject);
             } else {
-                waitPool.push({ that: this, fn, props, resolve, reject });
+                waitPool.push([this, fn, props, resolve, reject]);
             }
         });
     };
