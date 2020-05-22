@@ -1,4 +1,4 @@
-type TCallMethod = (that1: any, fn1: Function, props1: any[], resolve1: Function, reject1: Function) => Promise<any>;
+type TCallMethod = (that: any, fn: Function, props: any[], resolve: Function, reject: Function) => Promise<any>;
 
 export = function limit(size: Number, func?: Function) {
     let n = 0;
