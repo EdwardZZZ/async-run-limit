@@ -11,7 +11,7 @@ $ npm i -S async-run-limit
 
 ### Types
 ```js
-const limit: (size: Number, func?: Function) => (...props: any[]) => Promise<unknown>;
+declare function limit(size: number, func?: (...props: any[]) => any): (...props: any[]) => Promise<unknown>;
 ```
 
 ### Usage
