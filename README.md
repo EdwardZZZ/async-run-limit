@@ -59,3 +59,31 @@ r2(fn, '>>h').then(data => console.log(data)).catch(err => console.log(err.messa
 r2(fn, '>>i').then(data => console.log(data)).catch(err => console.log(err.message));
 r2(fn, '>>j').then(data => console.log(data)).catch(err => console.log(err.message));
 ```
+## Queue
+```ts
+import * as limit from 'async-run-limit';
+
+const sleep = (time: number) => new Promise(resolve => setTimeout(resolve, time));
+
+const asyncEditFn = async ({ id, title }: { id: number, title: string }) => {
+    await sleep(Math.random() * 3e3);
+    console.log(`[Edit] id: ${id} 's title change to "${title}"`)
+}
+
+function Queue<T = any>(queueKey: T, container: Map<T, Function> = new Map()): Function {
+    let result = container.get(queueKey);
+
+    if (!result) {
+        result = limit(1);
+
+        container.set(queueKey, result);
+    }
+
+    return result;
+}
+
+const q = Queue(1);
+q(asyncEditFn, { id: 1, title: 'abc', });
+q(asyncEditFn, { id: 1, title: 'abcd', });
+q(asyncEditFn, { id: 1, title: 'abcde', });
+```
